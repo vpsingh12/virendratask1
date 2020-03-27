@@ -39,7 +39,7 @@ onFormSumit = (event) => {
     });
  } 
  else {
-alert("please fill all ");
+alert("Please Fill All ");
  }
 }
 onChangeInput = (event) => {
