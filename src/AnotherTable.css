@@ -1,0 +1,16 @@
+.tabless th:hover {
+    font-style: italic;
+    background-color: black;
+    color:antiquewhite;
+
+}
+.tabless td {
+    text-transform: capitalize;
+}
+
+.tabless td:hover {
+    font-style: normal;
+    font-weight:bold;
+    background-color: cyan;
+    
+}
