@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-//import App from './App';
-import AnotherTable from "./AnotherTable";
+import App from './App';
+//import AnotherTable from "./AnotherTable";
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <React.StrictMode>
-    <AnotherTable />
+    <App />
   </React.StrictMode>,
   document.getElementById('root')
 );

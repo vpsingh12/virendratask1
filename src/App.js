@@ -5,8 +5,10 @@ import "react-table/react-table.css";
 import axios from "axios";
  import {
    Button,
-   Form
+   Form,
+   Card
  }  from "reactstrap";
+import AnotherTable from './AnotherTable';
 
 
 class App extends React.Component {
@@ -89,21 +91,10 @@ class App extends React.Component {
     
         
   return (
-    <div className = "react-classes">
-    <Form onSubmit={this.onFormSumit}/*className="form-inline mt-2 mb-2"*/>
-      
-       <div className="row mt-2 mb-2">
-        <div className="col">
-        <input type="text" className="form-control" placeholder="Enter Title" name="title" value={this.state.title} onChange={this.onChangeInput} />
-        </div>
-        <div className="col">
-        <input type="text" className="form-control" placeholder="Enter Content" name="body" value={this.state.body} onChange={this.onChangeInput}/>
-        </div>
-        <div className="col text-left">
-        <Button>Submit</Button>
-        </div>
-       </div>
-    </Form>
+    <div>
+    <AnotherTable       />
+    <div className = "container-fluid react-classes">
+  
      <ReactTable className=""
                 columns = {columns}
                 data = {this.state.posts}
@@ -113,7 +104,7 @@ class App extends React.Component {
      />
 
     </div>
-                 
+    </div>             
   );
 }
 }
