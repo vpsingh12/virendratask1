@@ -16,9 +16,9 @@ class App extends React.Component {
     super();
     this.state = {
       posts:[],
-      id:101,
-      title:"",
-      body:"",
+      //id:101,
+      //title:"",
+      //body:"",
       filteredData: [],
       searchInput: ""
     }
