@@ -18,55 +18,49 @@ class App extends React.Component {
       posts:[],
       id:101,
       title:"",
-      body:""
+      body:"",
+      filteredData: [],
+      searchInput: "",
+      isLoading: false,
     }
   }
  onChangeInput = (event) => {
    
-   this.setState({[event.target.name]:event.target.value})
+   this.setState({searchInput:event.target.value}, () =>
+   this.globalSearch());
+   console.log(event.target.value)
+
  }
 
  onFormSumit = (event) => {
     event.preventDefault();
-    if(((this.state.body)&& (this.state.title)) !="") {
-    this.setState({id:this.state.id + 1})
-    }
-    const firstName = event.target.querySelector("input[name='title']").value;
- const lastName = event.target.querySelector("input[name='body']").value;
+   
  }
-  //componentWillMount () {
-    //localStorage.getItem("posts") && this.setState({
-      //posts:JSON.parse(localStorage.getItem("posts"))
-    //})
- // }
+  
   componentDidMount () {
-  //const val =  localStorage.setItem("posts",JSON.stringify(posts));
-  //console (val);
-    //if (!localStorage.getItem("posts")) {
+ 
       axios.get("https://jsonplaceholder.typicode.com/posts")
       .then(res => {
        // const posts = res.data;
-       console.log(res.data)
-        this.setState({ posts:res.data
+       
+        this.setState({ posts:res.data , isLoading:false
          });
         
       })
-    //const val = localStorage.setItem("post",JSON.stringify(posts));
-    //const val1 = localStorage.getItem("posts") && this.setState({
-     // posts:JSON.parse(localStorage.getItem("posts"))
-   // })
-   // var posts;
-    //localStorage.setItem( 'posts', JSON.stringify(posts) );
-    //console.log( JSON.parse( localStorage.getItem( 'posts' ) ) );
-    }// else {
-     // console.log("using data from local storage");
-    //}
-    
+    }
   
+  globalSearch = (event) => {
+    let { searchInput } = this.state;
+    let filteredData = this.state.posts.filter(value => {
+      return (
+        value.title.toLowerCase().includes(searchInput.toLowerCase()) ||
+        value.body.toLowerCase().includes(searchInput.toLowerCase())
+        //const val =  (filteredData.length > 0 && filteredData) || searchInput ? filteredData : this.state.posts 
 
-  //componentWillUpdate (nextProp , nextState) {
-    //localStorage.setItem("posts",JSON.stringify(nextState.posts));
-  //}
+      );
+    });
+    this.setState({ filteredData });
+  };
   render() {
     const columns = [{  
       Header: 'Id',  
@@ -74,32 +68,38 @@ class App extends React.Component {
       width: 100,
       minWidth:100 ,
       maxWidth:100 ,
-      //filterable:true
+      filterable:false
       },
       {  
       Header: 'Title',  
       accessor: 'title',
       sortable : false ,
-      //filterable: true
+      filterable: true
       },
       {  
       Header: 'Content',  
       accessor: 'body',
       sortable: false ,
-      //filterable: true
+      filterable: true
         }]
     
-        
+       
+  let {filteredData ,searchInput,posts} = this.state;
   return (
     <div>
     <AnotherTable       />
+   
     <div className = "container-fluid react-classes">
-  
+    <Form  onSubmit={this.onFormSumit}>
+        <input type="text" className="form-control w-50 mt-3 mb-4 text-dark" value={searchInput || ""} placeholder="Search Here" onChange={this.onChangeInput} />
+     </Form>
      <ReactTable className=""
+                
                 columns = {columns}
-                data = {this.state.posts}
+                data = {filteredData.length > 0  ? filteredData : posts}
                 defaultPageSize = {10}  
                 pageSizeOptions = {[10,20]}
+                filterable
               
      />
 

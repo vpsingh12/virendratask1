@@ -2,8 +2,7 @@ import React from "react";
 import "./AnotherTable.css";
 import { Form,
          Table,
-         Button,
-         Card
+         Button
         } 
     from 'reactstrap';
 
@@ -49,7 +48,6 @@ onChangeInput = (event) => {
 render() {
 
 return (
-<Card>
 <div className="container-fluid">
 <Form onSubmit={this.onFormSumit}/*className="form-inline mt-2 mb-2"*/>
       
@@ -99,7 +97,6 @@ return (
       </tbody>
     </Table>
     </div>
-    </Card>
   );
 }
 }
