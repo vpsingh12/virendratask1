@@ -20,8 +20,7 @@ class App extends React.Component {
       title:"",
       body:"",
       filteredData: [],
-      searchInput: "",
-      isLoading: false,
+      searchInput: ""
     }
   }
  onChangeInput = (event) => {
@@ -43,7 +42,7 @@ class App extends React.Component {
       .then(res => {
        // const posts = res.data;
        
-        this.setState({ posts:res.data , isLoading:false
+        this.setState({ posts:res.data
          });
         
       })
