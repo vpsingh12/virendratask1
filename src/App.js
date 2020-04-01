@@ -23,42 +23,46 @@ class App extends React.Component {
       searchInput: ""
     }
   }
- onChangeInput = (event) => {
-   
-   this.setState({searchInput:event.target.value}, () =>
-   this.globalSearch());
-   console.log(event.target.value)
+  componentDidMount () {
+ 
+    axios.get("https://jsonplaceholder.typicode.com/posts")
+    .then(res => {
+     const posts = res.data;
+     
+      this.setState({ posts: posts
+       });
+      
+    })
+  }
 
- }
 
  onFormSumit = (event) => {
     event.preventDefault();
    
  }
   
-  componentDidMount () {
  
-      axios.get("https://jsonplaceholder.typicode.com/posts")
-      .then(res => {
-       // const posts = res.data;
-       
-        this.setState({ posts:res.data
-         });
-        
-      })
-    }
+ onChangeInput = (event) => {
+   
+  this.setState({searchInput:event.target.value}, () =>
+  this.globalSearch());
+  console.log(event.target.value)
+
+}
+  globalSearch = () => {
+    let { searchInput ,posts} = this.state;
   
-  globalSearch = (event) => {
-    let { searchInput } = this.state;
-    let filteredData = this.state.posts.filter(value => {
+    let filteredData = posts.filter(value => {
       return (
         value.title.toLowerCase().includes(searchInput.toLowerCase()) ||
         value.body.toLowerCase().includes(searchInput.toLowerCase())
         //const val =  (filteredData.length > 0 && filteredData) || searchInput ? filteredData : this.state.posts 
-
+                 
       );
     });
-    this.setState({ filteredData });
+  
+    this.setState({ posts : filteredData });
+  
   };
   render() {
     const columns = [{  
@@ -83,10 +87,10 @@ class App extends React.Component {
         }]
     
        
-  let {filteredData ,searchInput,posts} = this.state;
+  let {filteredData ,searchInput ,posts} = this.state;
   return (
     <div>
-    <AnotherTable       />
+    <AnotherTable  />
    
     <div className = "container-fluid react-classes">
     <Form  onSubmit={this.onFormSumit}>
@@ -94,8 +98,8 @@ class App extends React.Component {
      </Form>
      <ReactTable className=""
                 
-                columns = {columns}
-                data = {filteredData.length > 0  ? filteredData : posts}
+                columns = {columns}        
+                data = { filteredData.length > 0  ? filteredData : posts}
                 defaultPageSize = {10}  
                 pageSizeOptions = {[10,20]}
                 filterable
