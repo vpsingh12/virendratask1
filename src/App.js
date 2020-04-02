@@ -17,8 +17,11 @@ import axios from "axios";
 import AnotherTable from './AnotherTable';
 
 const options = [
-  { value: 'title', label: 'Title' },
-  { value: 'body', label: 'Content' },
+  { value: 'title', label: 'Title' }
+ 
+];
+const options1 = [
+   { value: 'body', label: 'Content' }
  
 ];
 
@@ -128,9 +131,19 @@ onFilterChange = (event) => {
     <Row className="mb-3">
             <Col md={3}>
               <FormGroup>
-                <Label>Filter</Label>
+                <Label>Title</Label>
                 <Select
                    options={options}
+                   classNamePrefix="Select"
+                   placeholder="Select ...."
+                />
+              </FormGroup>
+            </Col>
+            <Col md={3}>
+              <FormGroup>
+                <Label>Content</Label>
+                <Select
+                   options={options1}
                    classNamePrefix="Select"
                    placeholder="Select ...."
                 />
