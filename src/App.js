@@ -2,6 +2,7 @@ import React from 'react';
 import './App.css';
 import ReactTable from "react-table";
 import "react-table/react-table.css";
+import Select from "react-select";
 import axios from "axios";
  import {
    Button,
@@ -15,6 +16,11 @@ import axios from "axios";
  }  from "reactstrap";
 import AnotherTable from './AnotherTable';
 
+const options = [
+  { value: 'title', label: 'Title' },
+  { value: 'body', label: 'Content' },
+ 
+];
 
 class App extends React.Component {
   constructor () {
@@ -22,11 +28,11 @@ class App extends React.Component {
     this.state = {
       posts:[],
       //id:101,
-      title:"",
-      body:"",
+     // title:"",
+     // body:"",
       filteredData: [],
       searchInput: "",
-      searching:""
+     // searching:""
     }
   }
   componentDidMount () {
@@ -75,7 +81,7 @@ onFilterChange = (event) => {
   
   };
   render() {
-    let {filteredData ,searchInput ,posts ,searching} = this.state;
+    let {filteredData ,searchInput ,posts} = this.state;
 
 
 
@@ -110,26 +116,28 @@ onFilterChange = (event) => {
     <AnotherTable  />
    
     <div className = "container-fluid react-classes">
+    <Row>
+    <Col md={3}>
     <Form  onSubmit={this.onFormSumit}>
-        <input type="text" className="form-control w-50 mt-3 mb-4 text-dark" value={searchInput || ""} placeholder="Search Here" onChange={this.onChangeInput} />
+        <input type="text" className="form-control  mt-3 mb-4 text-dark" value={searchInput || ""} placeholder="Search Here" onChange={this.onChangeInput} />
      </Form>
-
-     <Form>
-      <Row form>
-        <Col md={6}>
-          <FormGroup>
-            <Label htmlFor="title">Title</Label>
-            <Input type="text" name="title" id="title" placeholder="Search by title...." onChange={this.onFilterChange}/>
-          </FormGroup>
-        </Col>
-        <Col md={6}>
-          <FormGroup>
-            <Label htmlFor="body">Content</Label>
-            <Input type="text" name="body" id="body"   placeholder="Search by Content..."  onChange={this.onFilterChange}/>
-          </FormGroup>
-        </Col>
-      </Row> 
-    </Form>
+     </Col>
+    </Row>
+    
+    <React.StrictMode>
+    <Row className="mb-3">
+            <Col md={3}>
+              <FormGroup>
+                <Label>Filter</Label>
+                <Select
+                   options={options}
+                   classNamePrefix="Select"
+                   placeholder="Select ...."
+                />
+              </FormGroup>
+            </Col>
+     </Row>
+     </React.StrictMode>
      <ReactTable className=""
                 
                 columns = {columns}        
