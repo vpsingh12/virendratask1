@@ -6,7 +6,12 @@ import axios from "axios";
  import {
    Button,
    Form,
-   Card
+   Card,
+   Row,
+   FormGroup, 
+   Label,
+   Input,
+   Col
  }  from "reactstrap";
 import AnotherTable from './AnotherTable';
 
@@ -17,10 +22,11 @@ class App extends React.Component {
     this.state = {
       posts:[],
       //id:101,
-      //title:"",
-      //body:"",
+      title:"",
+      body:"",
       filteredData: [],
-      searchInput: ""
+      searchInput: "",
+      searching:""
     }
   }
   componentDidMount () {
@@ -35,13 +41,17 @@ class App extends React.Component {
     })
   }
 
+onFilterChange = (event) => {
+  this.setState({[event.target.name]:event.target.value})
+  console.log(event.target.value);
+}
+
+
 
  onFormSumit = (event) => {
     event.preventDefault();
    
  }
-  
- 
  onChangeInput = (event) => {
    
   this.setState({searchInput:event.target.value}, () =>
@@ -65,6 +75,10 @@ class App extends React.Component {
   
   };
   render() {
+    let {filteredData ,searchInput ,posts ,searching} = this.state;
+
+
+
     const columns = [{  
       Header: 'Id',  
       accessor: 'id',
@@ -76,7 +90,7 @@ class App extends React.Component {
       {  
       Header: 'Title',  
       accessor: 'title',
-      sortable : false ,
+      sortable : false, 
       filterable: true
       },
       {  
@@ -87,7 +101,10 @@ class App extends React.Component {
         }]
     
        
-  let {filteredData ,searchInput ,posts} = this.state;
+  
+
+
+
   return (
     <div>
     <AnotherTable  />
@@ -96,13 +113,30 @@ class App extends React.Component {
     <Form  onSubmit={this.onFormSumit}>
         <input type="text" className="form-control w-50 mt-3 mb-4 text-dark" value={searchInput || ""} placeholder="Search Here" onChange={this.onChangeInput} />
      </Form>
+
+     <Form>
+      <Row form>
+        <Col md={6}>
+          <FormGroup>
+            <Label htmlFor="title">Title</Label>
+            <Input type="text" name="title" id="title" placeholder="Search by title...." onChange={this.onFilterChange}/>
+          </FormGroup>
+        </Col>
+        <Col md={6}>
+          <FormGroup>
+            <Label htmlFor="body">Content</Label>
+            <Input type="text" name="body" id="body"   placeholder="Search by Content..."  onChange={this.onFilterChange}/>
+          </FormGroup>
+        </Col>
+      </Row> 
+    </Form>
      <ReactTable className=""
                 
                 columns = {columns}        
                 data = { filteredData.length > 0  ? filteredData : posts}
                 defaultPageSize = {10}  
                 pageSizeOptions = {[10,20]}
-                filterable
+                //filterable
               
      />
 

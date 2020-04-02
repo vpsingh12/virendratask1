@@ -13,12 +13,17 @@ class AnotherTable extends React.Component {
            id:3 ,
            firstname:"",
            lastname:"",
-           items:[]
+           items:[],
+           search:""
        }
    }
 
 
-
+onSearchInput = (event) => {
+  event.preventDefault();
+  this.setState({search:event.target.value});
+  console.log(event.target.value);
+}
 
 onFormSumit = (event) => {
     event.preventDefault();
@@ -46,9 +51,17 @@ onChangeInput = (event) => {
     this.setState({[event.target.name]:event.target.value})
 }
 render() {
-
+let filteredData = this.state.items.filter(
+  (e) => {
+    return  (e.firstname.toLowerCase().indexOf(this.state.search.toLowerCase())) ||  (e.lastname.indexOf(this.state.search.toLowerCase())) !==-1
+  }
+)
 return (
 <div className="container-fluid">
+<div>
+<input type="text" className="form-control w-50 text-dark" placeholder="Search here...." name="search" 
+        value={this.state.search} onChange={this.onSearchInput} />
+</div>
 <Form onSubmit={this.onFormSumit}/*className="form-inline mt-2 mb-2"*/>
       
        <div className="row mt-2 mb-2">
@@ -66,7 +79,7 @@ return (
        </div>
 </Form>    
 <Table bordered className=" text-center tabless">
-      <thead color="primary" style = {{backgroundColor:"darkcyan",color:"floralwhite"}}className="">
+      <thead color="primary" style = {{backgroundColor:"darkcyan",color:"floralwhite"}} className="">
         <tr>
           <th>Id</th>
           <th>First Name</th>
