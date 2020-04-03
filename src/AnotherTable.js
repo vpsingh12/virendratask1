@@ -1,11 +1,26 @@
 import React from "react";
 import "./AnotherTable.css";
+import Select from "react-select";
 import { Form,
          Table,
-         Button
+         Button,
+         Label,
+         FormGroup,
+         Row,
+         Col
         } 
     from 'reactstrap';
+const options = [
+  { value: 'Virendra', label: 'Virendra'},
+  { value: 'Ankit',label:'Ankit'},
+  { value: 'Deepu', label: 'Deepu'}
+]
 
+const options1 = [
+  { value: 'Singh', label: 'Singh'},
+  { value: 'Vats',label:'Vats'},
+  { value: 'Thakur', label: 'Thakur'}
+]
 class AnotherTable extends React.Component {
    constructor(props) {
        super(props);
@@ -51,17 +66,40 @@ onChangeInput = (event) => {
     this.setState({[event.target.name]:event.target.value})
 }
 render() {
-let filteredData = this.state.items.filter(
+/*let filteredData = this.state.items.filter(
   (e) => {
     return  (e.firstname.toLowerCase().indexOf(this.state.search.toLowerCase())) ||  (e.lastname.indexOf(this.state.search.toLowerCase())) !==-1
   }
-)
+)*/
 return (
 <div className="container-fluid">
 <div>
 <input type="text" className="form-control w-50 text-dark" placeholder="Search here...." name="search" 
         value={this.state.search} onChange={this.onSearchInput} />
 </div>
+<Row className="mb-3 mt-3">
+            <Col md={3}>
+              <FormGroup>
+                <Label>Firstname</Label>
+                <Select
+                   options={options}
+                  // value = {options.value}
+                   classNamePrefix="Select"
+                   placeholder="Select ...."
+                />
+              </FormGroup>
+            </Col>
+            <Col md={3}>
+              <FormGroup>
+                <Label>Lastname</Label>
+                <Select
+                   options={options1}
+                   classNamePrefix="Select"
+                   placeholder="Select ...."
+                />
+              </FormGroup>
+            </Col>
+     </Row>
 <Form onSubmit={this.onFormSumit}/*className="form-inline mt-2 mb-2"*/>
       
        <div className="row mt-2 mb-2">
