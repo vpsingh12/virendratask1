@@ -33,8 +33,8 @@ class App extends React.Component {
       //id:101,
      // title:"",
      // body:"",
-      filteredData: [],
-      searchInput: "",
+      //filteredData: [],
+      searchString: "",
      // searching:""
     }
   }
@@ -42,24 +42,32 @@ class App extends React.Component {
  
     axios.get("https://jsonplaceholder.typicode.com/posts")
     .then(res => {
-     const posts = res.data;
-     
-      this.setState({ posts: posts
+    // const posts = res.data;
+      this.setState({ posts: res.data
        });
       
     })
   }
 
-onFilterChange = (event) => {
+/*onFilterChange = (event) => {
   this.setState({[event.target.name]:event.target.value})
   console.log(event.target.value);
-}
+}*/
 
 
 
  onFormSumit = (event) => {
     event.preventDefault();
    
+ }
+
+ onChangeInput = (event) => {
+  this.setState({searchString:event.target.value});
+ }
+
+ /*onChangeInput = (event) => {
+   this.setState({searchString:this.refs.Search.value});
+   this.refs.Search.focus();
  }
  onChangeInput = (event) => {
    
@@ -82,12 +90,17 @@ onFilterChange = (event) => {
   
     this.setState({ posts : filteredData });
   
-  };
+  };*/
   render() {
-    let {filteredData ,searchInput ,posts} = this.state;
+    let {searchString ,posts} = this.state;
+    let newPost = posts;
+    let search = searchString.trim().toLowerCase();
 
-
-
+    if (search.length > 0) {
+      newPost = newPost.filter((user) => {
+        return user.title.toLowerCase().match(search) || user.body.toLowerCase().match(search);
+      });
+    }
     const columns = [{  
       Header: 'Id',  
       accessor: 'id',
@@ -100,13 +113,13 @@ onFilterChange = (event) => {
       Header: 'Title',  
       accessor: 'title',
       sortable : false, 
-      filterable: true
+      //filterable: true
       },
       {  
       Header: 'Content',  
       accessor: 'body',
       sortable: false ,
-      filterable: true
+      //filterable: true
         }]
     
        
@@ -122,18 +135,19 @@ onFilterChange = (event) => {
     <Row>
     <Col md={3}>
     <Form  onSubmit={this.onFormSumit}>
-        <input type="text" className="form-control  mt-3 mb-4 text-dark" value={searchInput || ""} placeholder="Search Here" onChange={this.onChangeInput} />
+        <input type="text" className="form-control  mt-3 mb-4 text-dark"  value={searchString}  placeholder="Search Here" onChange={this.onChangeInput} />
      </Form>
      </Col>
     </Row>
     
-    <React.StrictMode>
+    
     <Row className="mb-3">
             <Col md={3}>
               <FormGroup>
                 <Label>Title</Label>
                 <Select
                    options={options}
+                   value = {options.value}
                    classNamePrefix="Select"
                    placeholder="Select ...."
                 />
@@ -150,13 +164,14 @@ onFilterChange = (event) => {
               </FormGroup>
             </Col>
      </Row>
-     </React.StrictMode>
+     
      <ReactTable className=""
                 
                 columns = {columns}        
-                data = { filteredData.length > 0  ? filteredData : posts}
+                data = { /*filteredData.length > 0  ? filteredData : posts*/newPost}
                 defaultPageSize = {10}  
                 pageSizeOptions = {[10,20]}
+                noDataText = "No Data Found"
                 //filterable
               
      />
