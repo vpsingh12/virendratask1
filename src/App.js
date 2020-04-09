@@ -16,7 +16,7 @@ import axios from "axios";
  }  from "reactstrap";
 import AnotherTable from './AnotherTable';
 
-const options = [
+const options0 = [
   { value: 'title', label: 'Title' }
  
 ];
@@ -31,23 +31,31 @@ class App extends React.Component {
     this.state = {
       posts:[],
       //id:101,
-     // title:"",
+       title:"",
+       options:"",
      // body:"",
       //filteredData: [],
       searchString: "",
-     // searching:""
+     // searching:"",
+    // searchTitle:""
     }
   }
+
   componentDidMount () {
- 
-    axios.get("https://jsonplaceholder.typicode.com/posts")
+  let arr = [];
+  axios.get("https://jsonplaceholder.typicode.com/posts")
     .then(res => {
     // const posts = res.data;
+    //console.log(res.data)
       this.setState({ posts: res.data
-       });
-      
-    })
+        
+       }
+       
+    
+    )
+    
   }
+ )}
 
 /*onFilterChange = (event) => {
   this.setState({[event.target.name]:event.target.value})
@@ -57,7 +65,7 @@ class App extends React.Component {
 
 
  onFormSumit = (event) => {
-    event.preventDefault();
+    event.preventDefault()
    
  }
 
@@ -92,15 +100,27 @@ class App extends React.Component {
   
   };*/
   render() {
-    let {searchString ,posts} = this.state;
+    let {searchString ,posts ,options} = this.state;
     let newPost = posts;
+    //let option = options;
     let search = searchString.trim().toLowerCase();
+    //let searchings = searchTitle.trim().toLowerCase();
 
     if (search.length > 0) {
       newPost = newPost.filter((user) => {
-        return user.title.toLowerCase().match(search) || user.body.toLowerCase().match(search);
+        return user.title.toLowerCase().match(search) || user.body.toLowerCase().match(search)
       });
     }
+   //if (options.length> 0) {
+     //option = options.filter((user) => {
+       //return user.title.toLowerCase().match(option)
+    //});
+  //}
+    const titles = posts.map((o) => {
+      return { value: o.title, label: o.title };
+    })
+
+
     const columns = [{  
       Header: 'Id',  
       accessor: 'id',
@@ -120,10 +140,10 @@ class App extends React.Component {
       accessor: 'body',
       sortable: false ,
       //filterable: true
-        }]
+     }]
     
        
-  
+
 
 
 
@@ -146,8 +166,9 @@ class App extends React.Component {
               <FormGroup>
                 <Label>Title</Label>
                 <Select
-                   options={options}
-                   value = {options.value}
+                    options={titles}
+                    value = {titles.value}
+                   //value = {options.value}
                    classNamePrefix="Select"
                    placeholder="Select ...."
                 />
@@ -157,9 +178,11 @@ class App extends React.Component {
               <FormGroup>
                 <Label>Content</Label>
                 <Select
-                   options={options1}
+                   options={posts.map((o) => {
+                    return { value: o.body, label: o.body };
+                  })}
                    classNamePrefix="Select"
-                   placeholder="Select ...."
+                   placeholder="Select ...."                            
                 />
               </FormGroup>
             </Col>
@@ -171,7 +194,7 @@ class App extends React.Component {
                 data = { /*filteredData.length > 0  ? filteredData : posts*/newPost}
                 defaultPageSize = {10}  
                 pageSizeOptions = {[10,20]}
-                noDataText = "No Data Found"
+                noDataText = {"No Data Found"}
                 //filterable
               
      />
