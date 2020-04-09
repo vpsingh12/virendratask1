@@ -17,7 +17,7 @@ import axios from "axios";
 import AnotherTable from './AnotherTable';
 
 const options0 = [
-  { value: 'title', label: 'Title' }
+  { value: 'title', label: 'Title' } 
  
 ];
 const options1 = [
@@ -49,10 +49,7 @@ class App extends React.Component {
     //console.log(res.data)
       this.setState({ posts: res.data
         
-       }
-       
-    
-    )
+       } )
     
   }
  )}
@@ -61,8 +58,13 @@ class App extends React.Component {
   this.setState({[event.target.name]:event.target.value})
   console.log(event.target.value);
 }*/
-
-
+/*
+ const titles = () => {
+  this.state.posts.map((o) => {
+    return { value: o.title, label: o.title };
+  })
+ }
+*/
 
  onFormSumit = (event) => {
     event.preventDefault()
@@ -73,6 +75,12 @@ class App extends React.Component {
   this.setState({searchString:event.target.value});
  }
 
+
+/*
+ titles = () => { this.state.posts.map((o) => {
+  return { value: o.title, label: o.title };
+}) 
+}*/
  /*onChangeInput = (event) => {
    this.setState({searchString:this.refs.Search.value});
    this.refs.Search.focus();
@@ -98,9 +106,16 @@ class App extends React.Component {
   
     this.setState({ posts : filteredData });
   
-  };*/
+  }*/
+ 
+
+  onTitleChange = (event) => {
+    this.setState({title:event.value})
+    console.log(event.value)
+  }
+
   render() {
-    let {searchString ,posts ,options} = this.state;
+    let {searchString ,posts ,options,title} = this.state;
     let newPost = posts;
     //let option = options;
     let search = searchString.trim().toLowerCase();
@@ -116,11 +131,24 @@ class App extends React.Component {
        //return user.title.toLowerCase().match(option)
     //});
   //}
-    const titles = posts.map((o) => {
-      return { value: o.title, label: o.title };
-    })
 
+  let titles = posts.map((o) => {
+    return { value: o.title, label: o.title };
+  }) 
 
+   //let title1 = title;
+   // if(title.length > 0) {
+    // titles = newPost.filter((user) => {
+     //  return user.title.toLowerCase().match(title)
+     // });
+  // }
+  /*  
+  if (title.length > 0){
+  
+      titles = newPost.filter((user) => {
+        return user.title.toLowerCase().match(title)
+      });
+  }*/
     const columns = [{  
       Header: 'Id',  
       accessor: 'id',
@@ -132,7 +160,7 @@ class App extends React.Component {
       {  
       Header: 'Title',  
       accessor: 'title',
-      sortable : false, 
+      sortable : false,
       //filterable: true
       },
       {  
@@ -166,8 +194,9 @@ class App extends React.Component {
               <FormGroup>
                 <Label>Title</Label>
                 <Select
+                    onChange={this.onTitleChange}
                     options={titles}
-                    value = {titles.value}
+                    //value = {title}
                    //value = {options.value}
                    classNamePrefix="Select"
                    placeholder="Select ...."
@@ -182,7 +211,7 @@ class App extends React.Component {
                     return { value: o.body, label: o.body };
                   })}
                    classNamePrefix="Select"
-                   placeholder="Select ...."                            
+                   placeholder="Select ...."                           
                 />
               </FormGroup>
             </Col>
