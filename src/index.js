@@ -1,12 +1,13 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import GivenTask from "./GivenTask.js"
+//import App from './App';
 //import AnotherTable from "./AnotherTable";
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   
-    <App />
+    <GivenTask />
     
   ,
   document.getElementById('root')

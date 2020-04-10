@@ -1,0 +1,10 @@
+.ReactTable .rt-thead .rt-tr {
+    text-align: center;
+    font-size: 25px;
+    
+    color:  blue;
+    box-shadow: none;
+  }
+  .ReactTable .-even {
+    background-color: #f2f2f2;
+  }

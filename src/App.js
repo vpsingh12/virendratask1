@@ -31,7 +31,7 @@ class App extends React.Component {
     this.state = {
       posts:[],
       //id:101,
-       title:"",
+       titles:"",
        options:"",
      // body:"",
       //filteredData: [],
@@ -110,8 +110,12 @@ class App extends React.Component {
  
 
   onTitleChange = (event) => {
-    this.setState({title:event.value})
-    console.log(event.value)
+ const  titles = this.state.posts.filter((user) => {
+     return user.title.toLowerCase().match(event.titles)
+    });
+    console.log(titles);
+    this.setState({titles:titles})
+   
   }
 
   render() {
@@ -132,7 +136,7 @@ class App extends React.Component {
     //});
   //}
 
-  let titles = posts.map((o) => {
+  const titles = posts.map((o) => {
     return { value: o.title, label: o.title };
   }) 
 
@@ -142,8 +146,8 @@ class App extends React.Component {
      //  return user.title.toLowerCase().match(title)
      // });
   // }
-  /*  
-  if (title.length > 0){
+   
+  /*if (title.length > 0){
   
       titles = newPost.filter((user) => {
         return user.title.toLowerCase().match(title)
@@ -184,7 +188,7 @@ class App extends React.Component {
     <Col md={3}>
     <Form  onSubmit={this.onFormSumit}>
         <input type="text" className="form-control  mt-3 mb-4 text-dark"  value={searchString}  placeholder="Search Here" onChange={this.onChangeInput} />
-     </Form>
+    </Form>
      </Col>
     </Row>
     
@@ -211,7 +215,7 @@ class App extends React.Component {
                     return { value: o.body, label: o.body };
                   })}
                    classNamePrefix="Select"
-                   placeholder="Select ...."                           
+                   placeholder="Select ...."                      
                 />
               </FormGroup>
             </Col>
@@ -219,11 +223,12 @@ class App extends React.Component {
      
      <ReactTable className=""
                 
-                columns = {columns}        
+                columns = {columns}       
                 data = { /*filteredData.length > 0  ? filteredData : posts*/newPost}
                 defaultPageSize = {10}  
                 pageSizeOptions = {[10,20]}
                 noDataText = {"No Data Found"}
+                
                 //filterable
               
      />
