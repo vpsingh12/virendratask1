@@ -5,6 +5,23 @@
     color:  blue;
     box-shadow: none;
   }
+  .ReactTable .rt-tbody .rt-td {
+    text-align: center;
+    margin-top: auto;
+    margin-bottom: auto;
+    color: navy;
+  }
+  .ReactTable .rt-tbody .rt-td:hover {
+    font-weight: 600; 
+  }
   .ReactTable .-even {
     background-color: #f2f2f2;
+  }
+  .actions-button-1 {
+    border: 1px solid blue;
+    border-radius: 5px;
+  }
+  .actions-button-2 {
+    border : 1px solid red;
+    border-radius: 5px;
   }

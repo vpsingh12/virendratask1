@@ -35,7 +35,7 @@ onInputChange = (event) => {
   console.log(event.target.value)
 }
 onSubmitModel = (event) => {
-  event.preventDefault();
+  //event.preventDefault();
 }
     render() {
 
@@ -49,9 +49,9 @@ onSubmitModel = (event) => {
               <Row className="mb-3">
                  <Col md={6}>
                      <FormGroup>
-                      <Label>First Name</Label>
+                      <Label>First Name<span className="text-danger">*</span></Label>
                        <input type="text" className="form-control text-dark" placeholder="Enter First Name" name="firstname" 
-                        value={this.state.firstname} onChange={this.onInputChange}
+                        value={this.state.firstname} onChange={this.onInputChange} required
                       />
                      </FormGroup>
                   </Col>
@@ -75,7 +75,7 @@ onSubmitModel = (event) => {
                      <FormGroup>
                       <Label>Contact No</Label>
                       <input type="number" className="form-control text-dark " placeholder="Enter Contact No" name="contact" 
-                       value={this.state.email} onChange={this.onInputChange}
+                       value={this.state.contact} onChange={this.onInputChange}
                       />
                      </FormGroup>
                   </Col>
