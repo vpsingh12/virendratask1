@@ -9,7 +9,7 @@ import {
     Form,
     Card,
     Row,
-    FormGroup, 
+    FormGroup,
     Label,
     Input,
     Col,
@@ -23,7 +23,12 @@ import {
  import {FaTrashAlt } from "react-icons/fa";
  import {FaPenAlt } from "react-icons/fa";
 
-
+const tableValue = {
+  firstName:"",
+  lastName:"",
+  email:"",
+  contact:""
+}
 class GivenTask extends React.Component {
     constructor(props) {
        super(props);
@@ -37,10 +42,14 @@ class GivenTask extends React.Component {
         items:[]
        }
     }
+    editData = (e) => {
+      console.log(e.original)
+       this.setState({ tableValue: e.original},() => this.toggle() );
+     }
 
-    toggle = (e) => {
+    toggle = () => {
       this.setState({showModal:!this.state.showModal})
-      console.log(e)
+     // console.log(e)
       }
      onInputChange = (event) => {
        this.setState({[event.target.name]:event.target.value})
@@ -50,11 +59,10 @@ class GivenTask extends React.Component {
      //event.preventDefault();
      let items = [...this.state.items];
      
-    if ((this.state.firstName) && (this.state.lastName) && (this.state.email) && (this.state.contact) !=="") {
+    if ((this.state.firstName) !=="") {
     
     items.push({
-     // id:this.state.id,
-
+      id:this.state.id,
       firstName: this.state.firstName,
       lastName: this.state.lastName,
       email:this.state.email,
@@ -69,23 +77,33 @@ class GivenTask extends React.Component {
       email:'',
       contact:''
     });
-    console.log()
+   // console.log()
  }
  else {
-   alert ("Please fill all")
+   alert ("Please fill First Name")
  }
-     }
+ }
 
+ 
+ deleteData = (e) => {
+    console.log(e.original.id)
+    const items = [...this.state.items];
+    let updatedTable = items.filter(item =>  item.id !== e.original.id
+    );
+    this.setState({ items: updatedTable });
+
+  }
  render () {
     const columns = [{  
         Header: 'FirstName',  
         accessor: 'firstName',
-        
+        sortable : false
         },
         {  
         Header: 'LastName',  
         accessor: 'lastName',
         sortable : false,
+       
         //filterable: true
         },
         {  
@@ -98,6 +116,7 @@ class GivenTask extends React.Component {
         Header: 'Contact',  
         accessor: 'contact',
         sortable: false ,
+      
         //filterable: true
        },
        {  
@@ -109,6 +128,7 @@ class GivenTask extends React.Component {
               className="mr-2 actions-button-1"
               color="white"
               title="Edit"
+              onClick={() => this.editData(row)}
             >
               <FaPenAlt style={{ color: "blue"}}/>
             </Button>
@@ -116,6 +136,7 @@ class GivenTask extends React.Component {
               className="actions-button-2"
               color="white"
               title="Delete"
+              onClick={() => this.deleteData(row)}
             >
               <FaTrashAlt style={{ color: "red"}}/>         
             </Button>
